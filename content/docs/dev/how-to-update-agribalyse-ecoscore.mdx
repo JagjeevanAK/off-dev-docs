@@ -1,9 +1,7 @@
 ---
-title: How to Update Agribalyse Data for Eco-Score Calculations
-description: Step-by-step guide for updating the Agribalyse database used in Open Food Facts Eco-Score calculations, including data conversion, category mapping, and database updates
+title: "Agribalyse Updates"
+description: "Comprehensive guide for updating the AGRIBALYSE database to calculate Ecoscore values including data conversion, category review, and impact analysis."
 ---
-
-<!-- # How to update Agribalyse (Ecoscore) -->
 
 Open Food Facts calculates the Ecoscore of a product from the Categories taxonomy where this has been linked to an AGRIBALYSE food code or proxy.
 
@@ -25,6 +23,8 @@ Once the Categories have been updated you will need to build the taxonomies. You
 
 It is also worth checking the impact the update has had on the main product database. This can be downloaded locally and the differences determined by running the update_all_products script.
 
+## Update Product Database
+
 The previous values of the Ecoscore are stored in the previous_data section under ecoscore_data. Before applying an update you will need to delete this section with the following MongoDB script:
 
 ```js
@@ -33,9 +33,11 @@ db.products.update({}, { $unset: { "ecoscore_data.previous_data": 0 } });
 
 You can then use the following script from a backend bash shell to update products:
 
-```
+```bash
 ./update_all_products.pl --fields categories --compute-ecoscore
 ```
+
+## Analyze Changes
 
 The process will set the `en:ecoscore_grade_changed` and `en:ecoscore_changed` misc_tags, which can be queried to analyse the results. For example, the following script generates a CSV file that summaries all the categories where the grade has changed:
 
@@ -64,7 +66,6 @@ var results = db.products
   .toArray();
 print("en.Name,fr.Name,Code Before,Code After,Grade Before,Grade After,Count");
 results.forEach((result) => {
-  // eslint-disable-next-line no-underscore-dangle
   var id = result._id;
   print(
     '"' +
@@ -84,6 +85,8 @@ results.forEach((result) => {
   );
 });
 ```
+
+### Fetch Specific Changed Products
 
 The following script fetches the specific products that have changed:
 
@@ -120,7 +123,6 @@ print(
 products.forEach((result) => {
   var ecoscore_data_main = result.ecoscore_data_main || {};
   var ecoscore_data_main_agribalyse = ecoscore_data_main.agribalyse || {};
-  // eslint-disable-next-line no-underscore-dangle
   print(
     result._id +
       ',"' +
@@ -170,6 +172,8 @@ For any new categories, review the AGRIBALYSE category descriptions to ensure th
 
 It is not necessary to add a category for every single AGRIBALYSE entry. For example, AGRIBALYSE has over 80 codes for different mineral waters but these all have almost exactly the same environmental impact. In cases like this it is acceptable to pick a single representative AGRIBALYSE code as a proxy for the Category in general.
 
+## Final Verification
+
 It may be worth doing a final check to see how many category combinations still do not have a match in AGRIBALYSE:
 
 ```js
@@ -190,7 +194,6 @@ var missing = db.products
   .toArray();
 print("Category,Count");
 missing.forEach((result) => {
-  // eslint-disable-next-line no-underscore-dangle
   var id = result._id;
   print('"' + (id.join(",") || "").replace(/"/g, '""') + '",' + result.count);
 });

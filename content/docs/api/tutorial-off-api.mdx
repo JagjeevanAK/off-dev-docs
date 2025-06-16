@@ -1,9 +1,7 @@
 ---
-title: Getting Started with the Open Food Facts API
-description: Comprehensive tutorial on using the Open Food Facts API, with practical examples of retrieving product data, computing Nutri-Score, and searching products using various criteria
+title: "API Tutorial"
+description: "Complete tutorial on using Open Food Facts API to get Nutri-scores, complete product data, and search products."
 ---
-
-<!-- # Tutorial on using the Open Food Facts API -->
 
 Welcome to this tutorial on basic usage of Open Food Facts API.
 
@@ -17,7 +15,7 @@ To get a product nutriscore, send a request to the [Get A Product By Barcode](ht
 
 ### Authentication
 
-Usually, no authentication is required to query Get A Product Nutri-score. However, there is a basic auth to avoid content indexation in the staging environment (which is used throughout this tutorial). For more details, visit the [Open Food Facts API Environment](index.md#api-deployments).
+Usually, no authentication is required to query Get A Product Nutri-score. However, there is a basic auth to avoid content indexation in the staging environment (which is used throughout this tutorial). For more details, visit the [Open Food Facts API Environment](index.mdx#api-deployments).
 
 ### Describing the Get Request
 
@@ -34,7 +32,7 @@ https://world.openfoodfacts.net/api/v2/product/3017624010701
 ```
 
 The response returns every data about Nutella Ferrero on the database. To get the nutriscore, we need to limit the response by specifying the nutriscore field, which is the `nutrition_grades` and `product_name`.
-<!--Is it only nutriscore_data -->
+{/*Is it only nutriscore_data */}
 
 ### Query Parameters
 
@@ -87,8 +85,8 @@ The `product` object in the response now contains the extra fields to show how t
             "energy-kcal": 539,
             "energy-kcal_100g": 539,
             "energy-kcal_unit": "kcal",
-            ...,
-            ...,
+            "...",
+            "...",
             "sugars": 56.3,
             "sugars_100g": 56.3,
             "sugars_unit": "g",
@@ -98,8 +96,8 @@ The `product` object in the response now contains the extra fields to show how t
             "energy": 2255,
             "energy_points": 6,
             "energy_value": 2255,
-            ...,
-            ...,
+            "...",
+            "...",
             "sugars_points": 10,
             "sugars_value": 56.3
         },
@@ -113,7 +111,7 @@ The `product` object in the response now contains the extra fields to show how t
 
 For more details, see the reference documentation for [Get A Product By Barcode](https://openfoodfacts.github.io/openfoodfacts-server/api/ref-v2/#get-/api/v2/product/-barcode-).
 
-<!-- Probably have a conclusion that links to the next possible topic eg filter countries using lc and cc-->
+{/* Probably have a conclusion that links to the next possible topic eg filter countries using lc and cc*/}
 
 ## Completing products to get the Nutri-Score
 
@@ -122,7 +120,7 @@ For more details, see the reference documentation for [Get A Product By Barcode]
 When these fields are missing in a nutriscore computation response, it signifies that the product does not have a Nutri-Score computation due to some missing nutrition data.
 Let's look at the [100% Real Orange Juice](https://world.openfoodfacts.net/api/v2/product/0180411000803/100-real-orange-juice?product_name,nutriscore_data,nutriments,nutrition_grades). If the product nutrition data is missing some fields, you can volunteer and contribute to it by getting the missing tags and writing to the OFF API to add them.
 
-<!-- I dont know if using 100% Real Orange Juice is a good approach for now , should we state that it was not computed at the time of writing this article just incase it gets computed in future or there is a product we can use to test this that wont change in future ? -->
+{/* I dont know if using 100% Real Orange Juice is a good approach for now , should we state that it was not computed at the time of writing this article just incase it gets computed in future or there is a product we can use to test this that wont change in future ? */}
 
 To know the missing tags, check the `misc-tags` field from the product response.
 
@@ -154,7 +152,7 @@ The sample response above for 100% Real Orange Juice `misc_tags` shows that the 
 
 ### Write data to make Nutri-Score computation possible
 
-The WRITE operations in the OFF API require authentication. Therefore you need a valid `user_id` and `password` to write the missing nutriment data to 100% Real Orange Juice.
+The WRITE operations in the OFF API require authentication. Therefore you need a valid `user_id`^[user_id_not_email] and `password` to write the missing nutriment data to 100% Real Orange Juice.
 
 > Sign up on the [Open Food Facts App](https://world.openfoodfacts.net/) to get your`user_id` and `password` if you don't have one.
 
@@ -194,6 +192,8 @@ If the request is successful, it returns a response that indicates that the fiel
 }
 ```
 
+^[user_id_not_email]: user_id is the username of your account. You must not use your email address.
+
 ### Read newly computed Nutri-Score
 
 Now, let's check if the Nutri-Score for 100% Real Orange Juice has been computed now that we have provided the missing data. Make a GET request to `https://world.openfoodfacts.net/api/v2/product/0180411000803?fields=product_name,nutriscore_data,nutriments,nutrition_grades` for Nutri-Score of 100% Real Orange Juice. The response now contains the Nutri-Score computation:
@@ -204,9 +204,9 @@ Now, let's check if the Nutri-Score for 100% Real Orange Juice has been computed
     "product": {
         "nutriments": {
             "carbohydrates": 11.864406779661,
-            .
-            .
-            .
+            "...",
+            "...",
+            "...",
             "sugars_unit": "g",
             "sugars_value": 11.864406779661
         },
@@ -214,9 +214,9 @@ Now, let's check if the Nutri-Score for 100% Real Orange Juice has been computed
             "energy": 195,
             "energy_points": 7,
             "energy_value": 195,
-            .
-            .
-            .
+            "...",
+            "...",
+            "...",
             "sugars_value": 11.86
         },
         "nutrition_grades": "c",
@@ -231,7 +231,7 @@ For more details, see the reference documentation for [Add or Edit A Product](ht
 
 You can also check the reference cheatsheet to know how to add/edit other types of product data.
 
-<!-- Include the link of the cheatsheet once it is published. -->
+{/* Include the link of the cheatsheet once it is published. */}
 
 ## Search for a Product by Nutri-score
 
@@ -283,9 +283,9 @@ The response returns all products that belong to the Orange Juice category, with
             "code": "3123340008288",
             "nutrition_grades": "c"
         },
-        .
-        .
-        .
+        "...",
+        "...",
+        "...",
         {
             "categories_tags_en": [
                 "Plant-based foods and beverages",
@@ -337,9 +337,9 @@ The date that each product was last modified is now used to order the product re
             "code": "3800014268048",
             "nutrition_grades": "c"
         },
-        '
-        '
-        '
+        "...",
+        "...",
+        "...",
         {
             "categories_tags_en": [
                 "Plant-based foods and beverages",

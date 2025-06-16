@@ -1,32 +1,29 @@
 ---
-title: Using the Perl REPL in Open Food Facts
-description: Guide to using the Perl REPL (Read-Eval-Print Loop) for interactive development and debugging in Open Food Facts, including setup and common usage patterns
+title: "Perl REPL"
+description: "Guide to using Perl REPL (re.pl) for testing code, learning Perl syntax, and interacting with Open Food Facts modules in development."
 ---
 
-<!-- # How to use Perl REPL (re.pl) -->
+{/* New to Perl? Check how to learn perl! */}
 
-> **_NOTE:_**  New to Perl? Check [how to learn perl](how-to-learn-perl.mdx)!
-
-On your local dev instance, the "backend" container
-comes with [Devel::REPL](https://metacpan.org/pod/Devel::REPL) installed.
+On your local dev instance, the "backend" container comes with [Devel::REPL](https://metacpan.org/pod/Devel::REPL) installed.
 
 This is a handy package to try out perl expressions and learn.
 
-Thanks to `PERL5LIB` variable which is already configured,
-you can load any module of `ProductOpener` from within it.
+Thanks to `PERL5LIB` variable which is already configured, you can load any module of `ProductOpener` from within it.
 
 ## Launch Repl
 
 Just run
 
-```
+```bash
 docker compose run --rm backend re.pl
 ```
 
 If you want to access external services (like mongodb), do not forget to start them.
 
-**_NOTE:_** If you get "exec: re.pl: not found", it means you may not have dev tools installed.
-Try going in your .env (or [.envrc](./how-to-use-direnv/)) file and add the line:
+{/* NOTE: If you get "exec: re.pl: not found", it means you may not have dev tools installed. */}
+
+Try going in your .env (or [.envrc](./how-to-use-direnv.mdx)) file and add the line:
 ```
 CPANMOPTS=--with-develop --with-feature=off_server_dev_tools
 ```
@@ -34,8 +31,7 @@ then just make build and retry, you will then be able to run re.pl
 
 ## Testing perl code
 
-It can be a handy way to get your hand into perl by testing some code patterns,
-or seeing how they react.
+It can be a handy way to get your hand into perl by testing some code patterns, or seeing how they react.
 
 For example one can test a regular expression:
 

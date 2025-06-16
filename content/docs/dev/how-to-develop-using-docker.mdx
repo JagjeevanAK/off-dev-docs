@@ -1,9 +1,7 @@
 ---
-title: Docker Development Guide for Open Food Facts
-description: Comprehensive guide for developers on using Docker with Open Food Facts, including debugging, log management, container operations, code changes, and managing multiple deployments
+title: "Docker Development Guide"
+description: "Complete guide for developing Open Food Facts using Docker containers, debugging, logging, and managing multiple deployments"
 ---
-
-<!-- # How to use Docker to Develop - a guide -->
 
 This guide is for developers and newcomers to help them debug and explore Docker.
 
@@ -13,7 +11,7 @@ This page describes how to test and debug your changes once you have set up the 
 
 ### Tail Docker Compose logs
 
-```
+```bash
 make log
 ```
 
@@ -26,7 +24,7 @@ but are instead available in specific directories.
 
 To see them use:
 
-```
+```bash
 make tail
 ```
 
@@ -40,13 +38,12 @@ It will `tail -f` all the files present in the `logs/` directory:
 * `nginx/error.log`
 
 You can also simply run:
-```
+```bash
 tail -f <FILEPATH>
 ```
 to check a specific log.
 
 One of the most important is `log4perl.log`.
-
 
 ### Increasing log verbosity
 
@@ -63,7 +60,7 @@ log4perl.rootLogger=TRACE, LOGFILE
 
 Run the following to open a bash shell within the `backend` container:
 
-```
+```bash
 docker compose exec backend bash
 ```
 
@@ -73,7 +70,7 @@ You should see `root@<CONTAINER_ID>:/#` (opened root shell): you are now within 
 
 Navigate to the specific directory and run
 
-```
+```bash
 ls -lrt
 ```
 It will list all directories and their permissions.
@@ -82,7 +79,7 @@ It will list all directories and their permissions.
 
 Navigate to your specific directory using `cd` and run
 
-```
+```bash
 mkdir directory-name
 ```
 
@@ -92,13 +89,13 @@ mkdir directory-name
 
 Go to `/opt/product-opener/scripts` and run
 
-```
+```bash
 ./minion_producers.pl minion job
 ```
 
 The above command will show the status of minion jobs. Run the following command to launch the minion jobs.
 
-```
+```bash
 ./minion_producers.pl minion worker -m production -q pro.openfoodfacts.org
 ```
 
@@ -107,7 +104,7 @@ The above command will show the status of minion jobs. Run the following command
 Sometimes restarting the whole `backend` container is overkill, and you can just
 restart `Apache` from inside the container:
 
-```
+```bash
 apache2ctl -k restart
 ```
 
@@ -120,7 +117,6 @@ Use `exit` to exit the container.
 In the dev environment, any code change to the local directory will be written 
 to the container. That said, some code changes require a restart of the `backend` 
 container, or rebuilding the NPM assets.
-
 
 ## Getting away from make up
 
@@ -141,10 +137,9 @@ you can run `docker compose build` (or maybe it's a good time to use `make up` o
 You should explore the [docker compose commands](https://docs.docker.com/compose/reference/).
 Most are useful!
 
-
 ### Live reload
 To automate the live reload on code changes, you can install the Python package `when-changed`:
-```
+```bash
 pip3 install when-changed
 when-changed -r docker/ docker-compose.yml .env -c "make restart"                                         # restart backend container on compose changes
 when-changed -r lib/ -r docker/ docker-compose.yml -c "docker compose backend restart" # restart Apache on code changes
@@ -153,17 +148,16 @@ when-changed -r html/ Dockerfile Dockerfile.frontend package.json -c "make up" #
 
 An alternative to `when-changed` is `inotifywait`.
 
-
 ## Run queries on MongoDB database
 
-```
+```bash
 docker compose exec mongodb mongo
 ```
 
 The above command will open a MongoDB shell, allowing you to use all the `mongo` 
 commands to interact with the database:
 
-```
+```bash
 show dbs
 use off
 db.products.count()
@@ -233,13 +227,12 @@ You will need:
   * `.env.obf`: configuration for Open Beauty Facts dev env.
   * `.env.opff`: configuration for Open Pet Food Facts dev env.
 
-
 * `COMPOSE_PROJECT_NAME`, `COMPOSE_PROFILES`,  `PRODUCT_OPENER_DOMAIN`, `PRODUCT_OPENER_PORT`, `PRODUCT_OPENER_FLAVOR` and `PRODUCT_OPENER_FLAVOR_SHORT` set to different values in each `.env` file, so that container names across deployments are unique and frontend containers don't port-conflict with each other. See example below.
 
 To switch between configurations, set `ENV_FILE` before running `make` commands,
 (or `docker compose` command):
 
-```
+```bash
 ENV_FILE=.env.off-pro make up # starts the OFF Producer's Platform containers.
 ENV_FILE=.env.obf     make up # starts the OBF containers.
 ENV_FILE=.env.opff    make up # starts the OPFF containers.
@@ -247,7 +240,7 @@ ENV_FILE=.env.opff    make up # starts the OPFF containers.
 
 or export it to keep it for a while:
 
-```
+```bash
 export ENV_FILE=.env.off # going to work on OFF for a while
 make up
 make restart
@@ -258,25 +251,25 @@ make log
 A good strategy is to have multiple terminals open, one for each deployment:
 
 * `off` [Terminal 1]:
-  ```
+  ```bash
   export ENV_FILE=.env.off
   make up
   ```
 
 * `off-pro` [Terminal 2]:
-  ```
+  ```bash
   export ENV_FILE=.env.off-pro
   make up
   ```
 
 * `obf` [Terminal 3]:
-  ```
+  ```bash
   export ENV_FILE=.env.obf
   make up
   ```
 
 * `opff` [Terminal 3]:
-  ```
+  ```bash
   export ENV_FILE=.env.opff
   make up
   ```
@@ -302,7 +295,7 @@ PRODUCT_OPENER_FLAVOR=openbeautyfacts
 PRODUCT_OPENER_FLAVOR_SHORT=obf
 ```
 Run:
-```
+```bash
 export ENV_FILE=.env.obf
 make dev
 ```

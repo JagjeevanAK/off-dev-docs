@@ -1,11 +1,9 @@
 ---
-title: Adding Missing Products to Open Food Facts
-description: Step-by-step guide for developers on contributing new products to the Open Food Facts database via API, including authentication, image upload, and leveraging machine learning predictions
+title: "Adding Missing Products"
+description: "Step-by-step tutorial for adding new products to Open Food Facts database via API with authentication, images, and proper data handling"
 ---
 
 **Dave** regularly adds new products to the database and completes missing information via API calls. He has described the process below to show other developers how easy it is to contribute.
-
----
 
 ## Authentication and Header
 
@@ -14,19 +12,17 @@ If you have an app that makes POST calls and you don't want your users to authen
 - `user_id`: myappname
 - `password`: 123456
 
-* For a complete reference on AUTH, please read: [Authentication in our introduction](../index.md#authentication)
-
----
+* For a complete reference on AUTH, please read: [Authentication in our introduction](../index.mdx#authentication)
 
 ## Adding images to support your edit, and get machine learning predictions
-If you ask your users just one thing, it would be to send photos of the packaging (front, ingredients, nutrition, recycling, the more the better)<br>
-Please refer to our [comprehensive tutorial on uploading images](../tutorial-uploading-photo-to-a-product.mdx)
+If you ask your users just one thing, it would be to send photos of the packaging (front, ingredients, nutrition, recycling, the more the better)
 
----
+Please refer to our [comprehensive tutorial on uploading images](../tutorial-uploading-photo-to-a-product.mdx)
 
 ## Sending the right country and language parameters, based on the country your user is located in, and the language the product is in.
 
-Traditionaly we advised to define the subdomain for the query as `us`. The subdomain automatically defines the country code (`cc`) and language of the interface (`lc`). The country code determines that only the products sold in the US are displayed. The language of the interface for the country code US is English.<br>
+Traditionaly we advised to define the subdomain for the query as `us`. The subdomain automatically defines the country code (`cc`) and language of the interface (`lc`). The country code determines that only the products sold in the US are displayed. The language of the interface for the country code US is English.
+
 In this case:
 [https://us.openfoodfacts.org/cgi/product_jqm2.pl?​​​​​​​](https://us.openfoodfacts.org/cgi/product_jqm2.pl?​​​​​​​)
 
@@ -38,23 +34,17 @@ We perform OCR on incoming images (even non selected ones), and make the JSON av
 
 [Sample image](https://images.openfoodfacts.org/images/products/26073347/2.jpg) and [sample JSON](https://images.openfoodfacts.org/images/products/26073347/2.json) you can base your heuristic on.
 
----
-
 ## Product Barcode
 
 After the version number, the word `code`, followed by its barcode must be added:
 
 [https://us.openfoodfacts.org/cgi/product_jqm2.pl?code=0074570036004](https://us.openfoodfacts.org/cgi/product_jqm2.pl?code=0074570036004)
 
----
-
 ## Credentials
 
 Dave adds his user credentials to the call as follows:
 
-[https://us.openfoodfacts.org/cgi/product_jqm2.pl?code=0074570036004&user_id=myappname&password=](https://us.openfoodfacts.org/cgi/product_jqm2.pl?code=0074570036004&user_id=myappname&password=)**
-
----
+[https://us.openfoodfacts.org/cgi/product_jqm2.pl?code=0074570036004&user_id=myappname&password=](https://us.openfoodfacts.org/cgi/product_jqm2.pl?code=0074570036004&user_id=myappname&password=)
 
 ## Parameters
 
@@ -63,14 +53,11 @@ You can define one or more parameters to add, for example, the brand and the Kos
 - `brands`: Häagen-Dazs
 - `labels`: kosher
 
-
 The call looks like this:
 
 `POST https://us.openfoodfacts.org/cgi/product_jqm2.pl?code=0074570036004&user_id=test&password=test&brands=Häagen-Dazs&labels=kosher`
 
 We strongly advise to use add_brands and add_labels instead, even on new products, to reduce the potential of your users or your API destroying data by mistake. brands or labels should be used if and only if you retrieve existing values, show them to your users, let them adjust them, and resend the whole dict with the proper format.
-
----
 
 ## Adding Additional Information to Existing Fields
 
@@ -84,8 +71,6 @@ To add additional information to existing parameters, add the prefix `add_` to t
 
 To see the complete list of parameters, see the **Parameters** section.
 
----
-
 ## Adding a Comment to your WRITE request.
 
 Use the `comment` parameter to add the id of the user editing the product. The id should not contain any personal data.
@@ -98,8 +83,6 @@ It should be structured as: user-agent + user-id.
 
 `comment=Edit by a Healthy Choices 1.2 iOS user - SxGFRZkFwdytsK2NYaDg4MzRVenNvUEI4LzU2a2JWK05LZkFRSWc9PQ`
 
-
----
 ## Leveraging Robotoff ML predictions to simplify life for your users
 
 Leveraging [Robotoff prediction](../intro-robotoff.mdx) to simplify life for your users.
@@ -119,6 +102,3 @@ Getting your users to [input packaging data](../../dev/explain-packaging-data.md
 ## Showing the result of their work
 - You can then reload the product, potentially using Knowledge Panels, to show the rewarding result of their work.
 - Make sure to congratulate them each time for their contribution to Open Food Facts and the common good.
-
-
-

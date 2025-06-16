@@ -1,9 +1,7 @@
 ---
-title: Writing and Running Tests in Open Food Facts
-description: Guide to writing, running, and debugging tests in Open Food Facts, including unit tests, integration tests, and continuous integration workflows
+title: "Writing and Running Tests"
+description: "Comprehensive guide to writing unit and integration tests for Open Food Facts, including debugging and expected results management"
 ---
-
-<!-- # How to write and run tests -->
 
 If you are a developer you are really encouraged to write tests as you fix bugs or develop new features.
 
@@ -16,7 +14,6 @@ If you are new to tests, please read:
 - [perldoc on test](https://perldoc.perl.org/Test)
 - [Test::More module doc](https://perldoc.perl.org/Test::More)
 
-
 ## Helpers
 
 We have some helper functions for tests.
@@ -26,7 +23,6 @@ See mainly:
 * [APITest.pm](https://openfoodfacts.github.io/openfoodfacts-server/dev/ref-perl-pod/ProductOpener/APITest.html)
 
 and other modules with Test in their name!
-
 
 ## Unit and Integration tests
 
@@ -39,7 +35,7 @@ Most integration tests issue queries to an open food facts
 ## Integration with docker compose
 
 Using Makefile targets, tests are run 
-* with a specific `COMPOSE_PROJECT_NAME° to avoid crashing your development data while running tests (as the project name [changes container, network and volumes names](https://docs.docker.com/compose/environment-variables/envvars/#compose_project_name))
+* with a specific `COMPOSE_PROJECT_NAME` to avoid crashing your development data while running tests (as the project name [changes container, network and volumes names](https://docs.docker.com/compose/environment-variables/envvars/#compose_project_name))
 * with a specific exposed port for Mongodb, to avoid clashes with the dev instance.
 
 ## Writing tests
@@ -63,7 +59,6 @@ After writing the test, you need to use `init_expected_results` (see below) once
 Then the next time you run the test, the results will be compared to the stored expected results.
 
 You can also use `init_expected_results` to generate new expected results file and easily see what has changed using `git diff`. If the changes are expected, you can commit the new expected results.
-
 
 ## Running tests
 
@@ -99,24 +94,21 @@ If you made a change that affects stored expected results, you can use:
 
 If you regenerate test results, be sure to check carefully that the changes in your commit are expected.
 
-**NOTE:** When making changes to language files (.pot, .po). Make sure to run `make build_lang_test` so that the language files are rebuild in test environment, before regenerating expected results for integration test.
-
+**NOTE:** When making changes to language files (.pot, .po), make sure to run `make build_lang_test` so that the language files are rebuild in the test environment, before regenerating expected results for integration tests.
 
 ## Debugging with tests
 
-Launching a test is a very effective way to understand what's going on in the code using the debugger.
+Starting a test is a very effective way to understand what's going on in the code using the debugger.
 
-This is done calling the test with `perl -d`.
-You can also use "TEST_CMD" argument with make target:
+This is done by running the test with `perl -d`.
+You can also use a "TEST_CMD" argument with the make target:
 
 ```bash
 make test-unit test="my-test.t" TEST_CMD="perl -d"
 ```
 
-Most often, you will have to use the next command "n" four times, before landing in you test, where you can easily set a breakpoint with `b <line-number>`.
+Most often, you will have to use the next command "n" four times before landing in your test, where you can easily set a breakpoint with `b <line-number>`.
 
 Read [perldoc about debugger](https://perldoc.perl.org/perldebug) to learn more.
 
-
-> :pencil: Note: With this explanation, in integration tests that issue requests to the server, you won't be able to run the debugger inside the server code, only in the test.
-
+> Note: With this method, in integration tests that issue requests to the server, you won't be able to run the debugger inside the server code, only in the test.

@@ -1,9 +1,7 @@
 ---
-title: Open Food Facts Images Dataset on AWS
-description: Guide to accessing and using the Open Food Facts image dataset stored on AWS S3, including file structure, image retrieval methods, and data extraction examples
+title: "AWS Images Dataset"
+description: "Guide to accessing and downloading Open Food Facts images dataset hosted on AWS S3 with OCR results and batch processing examples"
 ---
-
-<!-- # Open Food Facts AWS images dataset -->
 
 The Open Food Facts images dataset contains all images uploaded to Open Food
 Facts and the OCR results on these images obtained using Google Cloud Vision.
@@ -36,18 +34,24 @@ raw image, but with the `.json.gz` extension: `/401/235/911/4303/1.json.gz`
 To download images, you can either use AWS CLI, or perform an HTTP request
 directly:
 
-`wget https://openfoodfacts-images.s3.eu-west-3.amazonaws.com/data/401/235/911/4303/1.jpg`
+```bash
+wget https://openfoodfacts-images.s3.eu-west-3.amazonaws.com/data/401/235/911/4303/1.jpg
+```
 
 You can list all existing objects (images, OCR results) in the bucket by
 downloading the gzipped text file `s3://openfoodfacts-images/data/data_keys.gz`:
 
-`wget https://openfoodfacts-images.s3.eu-west-3.amazonaws.com/data/data_keys.gz`
+```bash
+wget https://openfoodfacts-images.s3.eu-west-3.amazonaws.com/data/data_keys.gz
+```
 
 Then you can easily filter the files you want using `grep` (raw images, OCR
 JSON) before downloading them. For example, to keep only 400px versions of all
 images:
 
-`zcat data_keys.gz | grep '.400.jpg'`
+```bash
+zcat data_keys.gz | grep '.400.jpg'
+```
 
 For example, if you want to extract a sample of images, you can use the code snippet below:
 
