@@ -3,19 +3,28 @@ title: "Schema Changelog"
 description: "Complete reference documenting changes to the Open Food Facts API and product schema versions with breaking and non-breaking modifications."
 ---
 
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Steps, Step } from 'fumadocs-ui/components/steps';
+
 This reference lists changes to the API and/or the product schema.
 
 ## Introduction
 
+<Steps>
+<Step title="Schema Evolution">
 The schema of product data in the Open Food Facts database changes over time:
 - We often add new raw data fields (e.g. packaging data), or new computed fields (e.g. health and environmental scores).
 - Occasionally, we refactor some fields to improve how we structure some data (e.g. in the beginning we had a flat list of ingredients, then we added a nested ingredients structure to better represent sub-ingredients).
-
+</Step>
+<Step title="Breaking vs. Non-Breaking Changes">
 We consider new fields to be non-breaking changes. When reading product data, make sure that your implementation will ignore new fields and not break.
 
 We consider changed fields to be breaking changes. To maintain backward compatibility, we increase the API version number when there is a breaking change, and we try to serve the old structure when a lower API version is requested by a client.
-
+</Step>
+<Step title="Undocumented Fields">
 The API may return undocumented fields. You should not rely on fields that are not documented, as they may be internal fields that could change or be removed. If you want to use some documented fields, please ask first on the #API channel. We do not consider changes to undocumented fields breaking changes, and added/changed/removed undocumented fields will often not be listed in this change log.
+</Step>
+</Steps>
 
 ## Product schema version
 

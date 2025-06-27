@@ -7,6 +7,7 @@ import {
 } from 'fumadocs-ui/page';
 import { notFound } from 'next/navigation';
 import defaultMdxComponents, { createRelativeLink } from 'fumadocs-ui/mdx';
+import { CodeBlock, Pre } from 'fumadocs-ui/components/codeblock';
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -25,6 +26,12 @@ export default async function Page(props: {
         <MDXContent
           components={{
             ...defaultMdxComponents,
+            // Enhanced code blocks with copy button and custom titles
+            pre: ({ ...props }) => (
+              <CodeBlock {...props}>
+                <Pre>{props.children}</Pre>
+              </CodeBlock>
+            ),
             // this allows you to link to other pages with relative file paths
             a: createRelativeLink(source, page),
             // you can add other MDX components here

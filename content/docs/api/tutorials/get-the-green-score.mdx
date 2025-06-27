@@ -3,55 +3,103 @@ title: "Get Green Score"
 description: "Comprehensive guide to implementing Eco-Score (Green Score) in your app with proper handling of data gaps and user experience"
 ---
 
-Helping your users get the Green-Score for any product
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
-- If you can't get the information on a specific product, you can get your user to send photos and data.
-- That will then be processed by Open Food Facts to get the computed result you want to show them.
-- You can implement the complete flow so that they get immediately the result with some effort on their side.
-- That will ensure user satisfaction
-- Please refer to the [product addition tutorial](./adding-missing-products.mdx) for the technical way to do the required operations (such as category input), and to the high level workflow below for all the cases you have to handle.
+<Callout>
+**Helping Users Get Green-Score**
+
+Help your users get the Green-Score for any product with a complete implementation flow that ensures user satisfaction.
+</Callout>
+
+<Steps>
+<Step>
+**Handle Missing Data**: If you can't get the information on a specific product, get your user to send photos and data
+</Step>
+<Step>
+**Process Data**: Data will be processed by Open Food Facts to get the computed result
+</Step>
+<Step>
+**Immediate Results**: Implement the complete flow so users get immediate results with minimal effort
+</Step>
+</Steps>
+
+<Card title="Technical Implementation" href="./adding-missing-products.mdx">
+Refer to the product addition tutorial for technical operations such as category input
+</Card>
 
 ## Table of contents
 
-* Getting your app ready for the Green-Score
-* Implementing the basic display of the score
-* Displaying the Green-Score outside France
-* Ensuring a good user experience (even with data gaps)
-* Adding disclaimers when we can't display the Green-Score
-* Adding disclaimers when the Green-Score is computed with a data gap + Asking the users to photograph and/or complete missing information
-* Adding value by explaining
-* Product Attributes
-* Additional ways to get ready
-* Onboarding producers you know
+<Cards>
+<Card title="App Preparation" description="Getting your app ready for the Green-Score" />
+<Card title="Basic Display" description="Implementing the basic display of the score" />
+<Card title="International Support" description="Displaying the Green-Score outside France" />
+<Card title="User Experience" description="Ensuring good UX even with data gaps" />
+<Card title="Disclaimers" description="Adding appropriate disclaimers" />
+<Card title="Value Addition" description="Adding value by explaining" />
+</Cards>
 
 ## Implementing the basic display of the score
 
-### Preferred method : Knowledge panels
-* With Knowledge panels, you just have to implement a for-loop in your app. Translations, updates, and all the complexity will be handled 
+<Tabs items={['Knowledge Panels (Preferred)', 'Raw API', 'Attributes API']}>
+<Tab value="Knowledge Panels (Preferred)">
+<Callout type="info">
+**Recommended Approach**
 
-### Using the Raw API
-* The API is adding a new ecoscore_grade field from A to F. Technically wise, it behaves like the Nutri-Score, so you can clone part of your Nutri-Score implementation 
-* If (and only if) the server sends back a proper value (a+, a, b, c, d, e or f), display the new score, otherwise, display our gray placeholder
-* [https://world.openfoodfacts.org/api/v0/product/3414280980209.json?fields=environmental_score_grade](https://world.openfoodfacts.org/api/v0/product/3414280980209.json?fields=environmental_score_grade)
+With Knowledge panels, you just have to implement a for-loop in your app. Translations, updates, and all the complexity will be handled.
+</Callout>
+</Tab>
+<Tab value="Raw API">
+<Callout>
+**Technical Implementation**
 
-```json
-{"status_verbose":"product found","product":{"ecoscore_grade":"b"},"status":1,"code":"3414280980209"}
+The API is adding a new `ecoscore_grade` field from A to F. Technically wise, it behaves like the Nutri-Score, so you can clone part of your Nutri-Score implementation.
+</Callout>
+
+<Callout type="warn">
+**Display Logic**
+
+If (and only if) the server sends back a proper value (a+, a, b, c, d, e or f), display the new score, otherwise, display our gray placeholder.
+</Callout>
+
+```javascript title="API Endpoint Example"
+https://world.openfoodfacts.org/api/v0/product/3414280980209.json?fields=environmental_score_grade
 ```
 
-* https://world.openfoodfacts.org/api/v0/product/3414280980209.json?fields=ecoscore_grade
-* Here are the visuals.
-    * [A+ Green Score visual](https://static.openfoodfacts.org/images/attributes/dist/green-score-a-plus.svg)
-    * [A Green Score visual](https://static.openfoodfacts.org/images/attributes/dist/green-score-a.svg)
-    * [B Green Score visual](https://static.openfoodfacts.org/images/attributes/dist/green-score-b.svg)
-    * [C Green Score visual](https://static.openfoodfacts.org/images/attributes/dist/green-score-c.svg)
-    * [D Green Score visual](https://static.openfoodfacts.org/images/attributes/dist/green-score-d.svg)
-    * [E Green Score visual](https://static.openfoodfacts.org/images/attributes/dist/green-score-e.svg)
-    * [F Green Score visual](https://static.openfoodfacts.org/images/attributes/dist/green-score-f.svg)
-    * [Unknown Green Score visual](https://static.openfoodfacts.org/images/attributes/dist/green-score-unknown.svg) 
+```json title="Response Example"
+{
+  "status_verbose": "product found",
+  "product": {
+    "ecoscore_grade": "b"
+  },
+  "status": 1,
+  "code": "3414280980209"
+}
+```
 
-### Using the Attributes API
+### Visual Assets
 
-The Open Food Facts official app use this one, which is less work but also less flexible (will display other data as well).
+<Cards>
+<Card title="A+ Green Score" href="https://static.openfoodfacts.org/images/attributes/dist/green-score-a-plus.svg" />
+<Card title="A Green Score" href="https://static.openfoodfacts.org/images/attributes/dist/green-score-a.svg" />
+<Card title="B Green Score" href="https://static.openfoodfacts.org/images/attributes/dist/green-score-b.svg" />
+<Card title="C Green Score" href="https://static.openfoodfacts.org/images/attributes/dist/green-score-c.svg" />
+<Card title="D Green Score" href="https://static.openfoodfacts.org/images/attributes/dist/green-score-d.svg" />
+<Card title="E Green Score" href="https://static.openfoodfacts.org/images/attributes/dist/green-score-e.svg" />
+<Card title="F Green Score" href="https://static.openfoodfacts.org/images/attributes/dist/green-score-f.svg" />
+<Card title="Unknown Green Score" href="https://static.openfoodfacts.org/images/attributes/dist/green-score-unknown.svg" />
+</Cards>
+</Tab>
+<Tab value="Attributes API">
+<Callout>
+**Official App Method**
+
+The Open Food Facts official app uses this method, which is less work but also less flexible (will display other data as well).
+</Callout>
+</Tab>
+</Tabs>
 
 ## Displaying the Green-Score outside France
 * You need to ensure the country your users are in:
@@ -66,35 +114,41 @@ The Open Food Facts official app use this one, which is less work but also less 
 
 We can compute the Green-Score for most of the database, but we're missing some data on some products to make the computation exact, and it won't be computed on some products. **In any case, you need to make sure your users won't be frustrated by implementing the following points:**
 
-* Adding disclaimers when we can't display the Green-Score
-    * **Add a message if we have a category but no Green-Score**
-        * if "en:categories-completed" in states_tags **AND** ecoscore_grade=Null
-            * We could not compute an Green-Score for this product. It might be that the category is not specific enough or that we don't have supporting data for this category. If you believe this is an error, you can email [contact@example.com](mailto:contact@example.com)
-            * You can get states with [https://world.openfoodfacts.org/api/v0/product/3414280980209.json?fields=environmental_score_grade,states_tags](https://world.openfoodfacts.org/api/v0/product/3414280980209.json?fields=environmental_score_grade,states_tags)
-    * **Help the user add the category if it is missing**
-        * You can use our Robotoff API to get your users to validate a prediction
-            * [Robotoff Questions](https://docs.google.com/document/d/1IoDy0toQrrqtWHvDYp2rEVw84Yq1J0x2pt-0RGTm7h0/edit)
-* Adding disclaimers when the Green-Score is computed with a data gap + Asking the users to photograph and/or complete missing information
-    * **Add a message if no labels are available**
-        * if "en:labels-to-be-completed" in states_tags
-            * `"The Green-Score takes into account environmental labels. Please take them into photo or edit the product so that they can be taken into account"`
-        * Asking your users for a photo should be enough
-        * You can otherwise add toggles for Explicit labels (please add a photo of them to avoid mistakes)
-        * You can get states with [https://world.openfoodfacts.org/api/v0/product/3414280980209.json?fields=environmental_score_grade,states_tags](https://world.openfoodfacts.org/api/v0/product/3414280980209.json?fields=environmental_score_grade,states_tags)
-    * **Add a message if no origins are available**
-        * if "en:origins-to-be-completed" in states_tags
-            * `"The Green-Score takes into account the origins of the ingredients. Please take them into a photo (ingredient list and/or any geographic claim or edit the product so that they can be taken into account. If it is not clear, you can contact the food producer."`
-            * You can get states with [https://world.openfoodfacts.org/api/v0/product/3414280980209.json?fields=environmental_score_grade,states_tags](https://world.openfoodfacts.org/api/v0/product/3414280980209.json?fields=environmental_score_grade,states_tags)
-    * **Add a message if recycling information is missing**
-        * if "en:packaging-photo-to-be-selected" in states_tags
-            * [Add a button to take a picture of the recycling instructions · Issue #3531 · openfoodfacts/openfoodfacts-androidapp](https://github.com/openfoodfacts/openfoodfacts-androidapp/issues/3531) 
-        * if "en:packaging-to-be-completed" in states_tags
-            * you can get your users to type it, take a photo, or have a combinatory picker with packaging type, packaging material, packaging recyclability
-            * The field to input raw recycling instructions eg: "Plastic bottle to recycle, Plastic cap to recycle" is "packaging_text_en" (change the language code accordingly)
-            * It will get automatically parsed and get used to compute the Green-Score
-        * You can get states with [https://world.openfoodfacts.org/api/v0/product/3414280980209.json?fields=environmental_score_grade,ecoscore_alpha,states_tags](https://world.openfoodfacts.org/api/v0/product/3414280980209.json?fields=ecoscore_grade,environmental_score_alpha,states_tags) 
-    * **Sharing some of your code**
-        * You are very welcome to implement data contribution in one of our SDKs. The more apps let their user add photos and data, the more Green-Scores we get.
+<Callout type="info" title="Handling Missing Green-Score (Category)">
+  If `"en:categories-completed"` is in `states_tags` AND `ecoscore_grade` is `Null`:
+  We could not compute a Green-Score for this product. It might be that the category is not specific enough or that we don't have supporting data for this category. If you believe this is an error, you can email [contact@example.com](mailto:contact@example.com).
+  You can get states with [https://world.openfoodfacts.org/api/v0/product/3414280980209.json?fields=environmental_score_grade,states_tags](https://world.openfoodfacts.org/api/v0/product/3414280980209.json?fields=environmental_score_grade,states_tags)
+</Callout>
+
+<Callout type="info" title="Helping Users Add Missing Categories">
+  You can use our Robotoff API to get your users to validate a prediction. Refer to [Robotoff Questions](https://docs.google.com/document/d/1IoDy0toQrrqtWHvDYp2rEVw84Yq1J0x2pt-0RGTm7h0/edit).
+</Callout>
+
+<Callout type="info" title="Handling Missing Labels">
+  If `"en:labels-to-be-completed"` is in `states_tags`:
+  `"The Green-Score takes into account environmental labels. Please take them into photo or edit the product so that they can be taken into account"`
+  Asking your users for a photo should be enough. You can otherwise add toggles for Explicit labels (please add a photo of them to avoid mistakes).
+  You can get states with [https://world.openfoodfacts.org/api/v0/product/3414280980209.json?fields=environmental_score_grade,states_tags](https://world.openfoodfacts.org/api/v0/product/3414280980209.json?fields=environmental_score_grade,states_tags)
+</Callout>
+
+<Callout type="info" title="Handling Missing Origins">
+  If `"en:origins-to-be-completed"` is in `states_tags`:
+  `"The Green-Score takes into account the origins of the ingredients. Please take them into a photo (ingredient list and/or any geographic claim or edit the product so that they can be taken into account. If it is not clear, you can contact the food producer."`
+  You can get states with [https://world.openfoodfacts.org/api/v0/product/3414280980209.json?fields=environmental_score_grade,states_tags](https://world.openfoodfacts.org/api/v0/product/3414280980209.json?fields=environmental_score_grade,states_tags)
+</Callout>
+
+<Callout type="info" title="Handling Missing Recycling Information">
+  If `"en:packaging-photo-to-be-selected"` is in `states_tags`:
+  [Add a button to take a picture of the recycling instructions · Issue #3531 · openfoodfacts/openfoodfacts-androidapp](https://github.com/openfoodfacts/openfoodfacts-androidapp/issues/3531)
+  If `"en:packaging-to-be-completed"` is in `states_tags`:
+  You can get your users to type it, take a photo, or have a combinatory picker with packaging type, packaging material, packaging recyclability.
+  The field to input raw recycling instructions e.g., "Plastic bottle to recycle, Plastic cap to recycle" is "packaging_text_en" (change the language code accordingly). It will get automatically parsed and get used to compute the Green-Score.
+  You can get states with [https://world.openfoodfacts.org/api/v0/product/3414280980209.json?fields=environmental_score_grade,ecoscore_alpha,states_tags](https://world.openfoodfacts.org/api/v0/product/3414280980209.json?fields=ecoscore_grade,environmental_score_alpha,states_tags)
+</Callout>
+
+<Callout type="info" title="Sharing Your Code">
+  You are very welcome to implement data contribution in one of our SDKs. The more apps let their user add photos and data, the more Green-Scores we get.
+</Callout>
 
 ## Adding value by explaining
 

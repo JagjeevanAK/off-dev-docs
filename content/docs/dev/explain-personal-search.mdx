@@ -3,6 +3,9 @@ title: "Personal Search"
 description: "Comprehensive explanation of Open Food Facts personal search feature allowing users to rank and score products according to their individual preferences."
 ---
 
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Steps, Step } from 'fumadocs-ui/components/steps';
+
 Personal search is a feature to let users rank and score products according to their preferences.
 
 It can be applied on the website and the mobile.
@@ -13,22 +16,27 @@ Bear in mind that user preferences for food is sensitive information that must n
 
 ## Preferences
 
+<Steps>
+<Step title="Client-Side Storage">
 Setting preferences happens client-side and is stored in browser or app local storage.
-
+</Step>
+<Step title="User-Defined Importance">
 The user can enter, for different attributes, how important each is according to their preferences.
-
+</Step>
+<Step title="Grouped Attributes">
 Attributes are grouped into sections (called groups).
+</Step>
+<Step title="Accessing Attributes">
+The attributes are accessible using `/api/v1/attribute_groups_<language_code>`, e.g., `https://world.openfoodfacts.org/api/v1/attribute_groups_en`.
 
-### Accessing attributes
-
-The attributes are accessible using `/api/v1/attribute_groups_<language_code>`, eg `https://world.openfoodfacts.org/api/v1/attribute_groups_en`.
-
-A panel is displayed in the web page using javascript to let users set their preferences{/* see product-preferences.js */}.
+A panel is displayed in the web page using javascript to let users set their preferences.
+</Step>
+</Steps>
 
 ## Scoring
 
-### Computing product match for each attribute
-
+<Steps>
+<Step title="Computing product match for each attribute">
 On a product, for each attribute, we compute a match score for each requirement.
 
 This matching could depend on the country and maybe other data, for example for environmental impact.
@@ -38,9 +46,8 @@ Each attribute has a specific algorithm for computing the match score.
 The Attributes.pm module contains functions to compute those attributes. It is exposed in the API in the `attribute_groups` properties (not returned by default, you have to explicitly ask for it).
 
 See also: [Product Attributes wiki](https://wiki.openfoodfacts.org/Product_Attributes)
-
-### Computing product match according to user preferences
-
+</Step>
+<Step title="Computing product match according to user preferences">
 We first compute a numerical score as follow:
 
 - all "not important" attributes according to user preferences are ignored
@@ -49,9 +56,8 @@ We first compute a numerical score as follow:
   - we take the "match" score of the product for this attribute
 - the score is the weighed average of individual attribute scores; it is between 0 and 100 (as match)
 - we also keep track of weights of unknown attributes vs weights of all attributes
-
-### Match status calculation
-
+</Step>
+<Step title="Match status calculation">
 The final match status is computed as follow:
 
 - **very_good_match**: score >= 75
@@ -63,9 +69,9 @@ The final match status is computed as follow:
 
 For the web, this is implemented in `product-search.js`, in function `match_product_to_preferences`.
 
-{/* Note: Currently, preferences_factors are hardcoded in product-search.js, while we have a preference api /api/v2/preferences which should be used but does not seem up to date. See issue #10406 */}
-
 When personal search is activated, the match status is displayed on product pages, and on search for each item.
+</Step>
+</Steps>
 
 ## Ranking
 

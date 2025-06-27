@@ -3,11 +3,16 @@ title: "Gitpod Setup"
 description: "Complete guide to using Gitpod for remote Open Food Facts development with cloud-based environments and SSH tunneling for local access."
 ---
 
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Steps, Step } from 'fumadocs-ui/components/steps';
+
 If your computer performance restricts you from developing, you can use [Gitpod](https://gitpod.io). Gitpod allows you to do the devs on an ephemeral environment. It is free up to 50 hours per month (https://www.gitpod.io/pricing).
 
 Gitpod provides a robust ready-to-code developer environment in the cloud eliminating the friction of setting up local environments and IDEs with Perl, Docker and plugins, making it possible for even new contributors to OpenFoodFacts Server to get started in minutes instead of hours!
 
-{/* Note that while this how-to is tailored for Gitpod, using alternatives like GitHub Codespaces should be similar. */}
+<Callout type="info" title="Alternatives">
+  Note that while this how-to is tailored for Gitpod, using alternatives like GitHub Codespaces should be similar.
+</Callout>
 
 For the most part, development on Gitpod is similar to developing locally as documented in the [quickstart guide](how-to-quick-start-guide.mdx) and [docker-developer-guide](how-to-develop-using-docker.mdx); however accessing your dev-deployment of `openfoodfacts-server` requires an extra step.
 
@@ -27,7 +32,9 @@ On the Gitpod side, you can also update what Gitpod is allowed to do with your G
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/openfoodfacts/openfoodfacts-server/)
 
-{/* Gitpod will automatically clone and open the repository for you in VSCode by default. It will also automatically build the project for you on opening and comes with Docker and other tools pre-installed making it one of the fastest ways to spin up an environment for openfoodfacts-server. */}
+<Callout type="info" title="Automatic Setup">
+  Gitpod will automatically clone and open the repository for you in VSCode by default. It will also automatically build the project for you on opening and comes with Docker and other tools pre-installed making it one of the fastest ways to spin up an environment for openfoodfacts-server.
+</Callout>
 
 Once the repository is open in Gitpod, other instructions in the [quick-start guide](how-to-quick-start-guide.mdx) can be generally followed.
 
@@ -39,11 +46,17 @@ Since Gitpod runs your code in a remote machine, your dev-deployment spun up wit
 
 To overcome this, we can use a SSH tunnel that listens to your local port 80 and forwards traffic to port 80 of the remote machine. Gitpod makes it really simple to SSH into your dev environment by letting you copy the `ssh` command required to reach your remote environment.
 
-1. Follow the ssh instructions on Gitpod's official guide: [SSH for workspaces as easy as copy/paste](https://www.gitpod.io/blog/copy-paste-ssh-workspace-access)
-2. Once you have copied the ssh command and ensure it works as-is, add a `-L 80:localhost:80` to the command to make it look like:
-   ```bash
-   ssh -L 80:localhost:80 'openfoodfac-openfoodfac-tok-openfoodfac-r9f61214h9vt.ssh.ws-c.gitpod.io'
-   ```
+<Steps>
+<Step title="Follow Gitpod's SSH Guide">
+Follow the ssh instructions on Gitpod's official guide: [SSH for workspaces as easy as copy/paste](https://www.gitpod.io/blog/copy-paste-ssh-workspace-access)
+</Step>
+<Step title="Add Local Port Forwarding">
+Once you have copied the ssh command and ensure it works as-is, add a `-L 80:localhost:80` to the command to make it look like:
+```bash title="SSH Tunnel Command Example"
+ssh -L 80:localhost:80 'openfoodfac-openfoodfac-tok-openfoodfac-r9f61214h9vt.ssh.ws-c.gitpod.io'
+```
+</Step>
+</Steps>
 
 Once you execute the altered command in your terminal, you should be able to access Open Food Facts on http://openfoodfacts.localhost just as documented in the quickstart guide!
 
@@ -63,26 +76,26 @@ Create an account to be able to edit products.
 
 After you made devs and want to apply changes and see them on the website, you can run:
 
-```bash
+```bash title="Restart Docker Compose Services"
 docker compose restart
 ```
 
-```bash
+```bash title="Build and Run Containers"
 make up
 ```
 
 If you face some difficulties, you can always look at the logs (use ctrl + c, to quit):
 
-```bash
+```bash title="View Docker Compose Logs"
 make log
 ```
 
-```bash
+```bash title="Tail Application Logs"
 make tail
 ```
 
 After development, before opening a pull request, run the following command:
 
-```bash
+```bash title="Run Project Checks"
 make checks
 ```

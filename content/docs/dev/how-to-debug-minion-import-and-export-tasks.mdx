@@ -3,6 +3,9 @@ title: "Debug Minion Tasks"
 description: "Comprehensive guide to debugging Minion import and export tasks including log analysis, job status checking, and troubleshooting failed tasks."
 ---
 
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Steps, Step } from 'fumadocs-ui/components/steps';
+
 For imports on the pro platform, and exports from the pro platform and imports on the public platform, we use Minion tasks.
 
 Those tasks are run by a Minion worker service, which is configured in `/etc/systemd/system/minion@off.service`
@@ -15,7 +18,7 @@ In the logs directory, we have:
 
 ## Checking the status of Minion tasks (jobs)
 
-```bash
+```bash title="Minion Job Status Example"
 off@off:/srv/off$ (off) ./scripts/minion_producers.pl minion job 
 [..]
 132132  inactive  pro.openfoodfacts.org  update_export_status_for_csv_file
@@ -63,17 +66,22 @@ import_csv_file_task - job: 132131 started - args: {"comment":"Import from produ
 
 To get more data (debug level) in `minion_log4perl.log`:
 
-1. **Stop the minion daemon** (as root user):
-   ```bash
-   systemctl stop minion@off.service
-   ```
-
-2. **Run it manually** (as off user):
-   ```bash
-   sudo -u off bash
-   source env/setenv off
-   TAP_LOG_FILTER=none perl scripts/minion_producers.pl minion worker -m production
-   ```
+<Steps>
+<Step title="Stop Minion Daemon">
+**Stop the minion daemon** (as root user):
+```bash
+systemctl stop minion@off.service
+```
+</Step>
+<Step title="Run Manually">
+**Run it manually** (as off user):
+```bash
+sudo -u off bash
+source env/setenv off
+TAP_LOG_FILTER=none perl scripts/minion_producers.pl minion worker -m production
+```
+</Step>
+</Steps>
 
 The `TAP_LOG_FILTER` environment variable is used to set the log level for Log4Perl. Setting it to `none` prints messages for all log levels.
 

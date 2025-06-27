@@ -1,5 +1,5 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
-import ThemeAwareLogo from 'components/ThemeAwareLogo';
+import ThemeAwareLogo from 'Components/ThemeAwareLogo';
 
 /**
  * Shared layout configurations

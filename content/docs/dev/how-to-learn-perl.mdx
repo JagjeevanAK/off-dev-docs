@@ -3,22 +3,65 @@ title: "Learning Perl"
 description: "Comprehensive guide to learning Perl programming language with resources, tutorials, and official documentation for Open Food Facts development"
 ---
 
-Here are some introductory resources to learn Perl:
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
+
+<Callout type="info">
+**New to Perl?**
+
+Here are some introductory resources to learn Perl for Open Food Facts development.
+</Callout>
 
 ## Quick start
 
-- [Perl Youtube Tutorial](https://www.youtube.com/watch?v=c0k9ieKky7Q) - Perl Enough to be dangerous // FULL COURSE 3 HOURS.
-- [Perl - Introduction](https://www.tutorialspoint.com/perl/perl_quick_guide.htm) - Introduction to perl from tutorialspoint
-- [Impatient Perl](https://blob.perl.org/books/impatient-perl/iperl.pdf) - PDF document for people interested in learning perl.
-- [Perl Fish](https://perl.fish/learn) also has a lot of resources
+<Cards>
+<Card href="https://www.youtube.com/watch?v=c0k9ieKky7Q" title="Perl YouTube Tutorial" description="Perl Enough to be dangerous // FULL COURSE 3 HOURS" external />
+<Card href="https://www.tutorialspoint.com/perl/perl_quick_guide.htm" title="Perl Introduction" description="Introduction to perl from tutorialspoint" external />
+<Card href="https://blob.perl.org/books/impatient-perl/iperl.pdf" title="Impatient Perl" description="PDF document for people interested in learning perl" external />
+<Card href="https://perl.fish/learn" title="Perl Fish" description="Comprehensive collection of Perl learning resources" external />
+</Cards>
 
 ## Official Documentation
 
-- [Perl.org](https://www.perl.org/) - Official Perl website with documentation, tutorials, and community resources.
-- [Learn Perl](https://learn.perl.org/) - Perl programming language tutorials for beginners.
-- [Perl Maven](https://perlmaven.com/) - Perl programming tutorials, tips, and code examples.
+<Callout>
+**Official Resources**
 
-## Some useful docs
+Start with these official Perl resources for the most up-to-date and comprehensive information.
+</Callout>
 
-- [Perl.org special variables](https://perldoc.perl.org/variables/) - if you search for meaning of special variables (like `$'` or `$#` etc.)
-- [Perl.org regular expression](https://perldoc.perl.org/perlre) - we use it quite a lot in ProductOpener's code
+<Cards>
+<Card href="https://www.perl.org/" title="Perl.org" description="Official Perl website with documentation, tutorials, and community resources" external />
+<Card href="https://learn.perl.org/" title="Learn Perl" description="Perl programming language tutorials for beginners" external />
+<Card href="https://perlmaven.com/" title="Perl Maven" description="Perl programming tutorials, tips, and code examples" external />
+</Cards>
+
+## Useful Documentation for Product Opener
+
+<Callout type="warning">
+**Important for Open Food Facts Development**
+
+These specific Perl features are used extensively in ProductOpener's codebase.
+</Callout>
+
+<Tabs items={['Special Variables', 'Regular Expressions']}>
+<Tab value="Special Variables">
+<Card href="https://perldoc.perl.org/variables/" title="Perl Special Variables" description="Reference for special variables like $', $#, etc." external />
+
+<Callout type="info">
+**Why This Matters**
+
+Product Opener uses many Perl special variables throughout the codebase. Understanding these will help you read and write code more effectively.
+</Callout>
+</Tab>
+
+<Tab value="Regular Expressions">
+<Card href="https://perldoc.perl.org/perlre" title="Perl Regular Expressions" description="Comprehensive guide to Perl regex syntax and features" external />
+
+<Callout type="info">
+**Heavily Used in Product Opener**
+
+We use regular expressions extensively in ProductOpener's code for text processing, data validation, and parsing.
+</Callout>
+</Tab>
+</Tabs>

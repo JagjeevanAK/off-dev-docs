@@ -3,11 +3,15 @@ title: "API Overview"
 description: "Complete guide to Open Food Facts API including authentication, rate limits, deployments, and available SDKs for developers."
 ---
 
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Steps, Step } from 'fumadocs-ui/components/steps';
+
 Everything you need to know about Open Food Facts API.
 
-{/* Please read this */}
-> **Note:** 👮‍♂️🚥Are you going to use our API?
-> Please **read this documentation entirely** before using it.
+<Callout type="warning">
+👮‍♂️🚥Are you going to use our API?
+Please **read this documentation entirely** before using it.
+</Callout>
 
 ## Overview
 
@@ -16,10 +20,16 @@ Open Food Facts is a food products database made by everyone, for everyone, that
 The Open Food Facts API enables developers to get information like ingredients and nutritional values of products, and even add more _facts_ to the products database. You can use the API to build applications that allow users to contribute to the database and make healthier food choices.
 
 **The current version of the API is `2`.**
-> Data in the Open Food Facts database is provided voluntarily by users who want to support the program. As a result, there are no assurances that the data is accurate, complete, or reliable. The user assumes the entire risk of using the data.
+
+<Callout type="info">
+Data in the Open Food Facts database is provided voluntarily by users who want to support the program. As a result, there are no assurances that the data is accurate, complete, or reliable. The user assumes the entire risk of using the data.
+</Callout>
 
 **The next version of the API is `3`.**
-> This version is in active development and may be subject to frequent changes.
+
+<Callout type="warning">
+This version is in active development and may be subject to frequent changes.
+</Callout>
 
 ## Before You Start
 
@@ -37,11 +47,21 @@ We like learning what the Open Food Facts data is used for. It is not mandatory,
 
 ### General principles
 
-- You can search for product information, including many useful computed values.
-- Suppose we don't have the information you need on a specific product. In that case, you (or your users) can upload the product photos, and the backend (and our AI algorithms!) will process them, generating helpful info. The photos will also be available for the users of Open Food Facts and every other API user.
-- You could also ask your user to enter some of the information about the product (like name, category, and weight) so that they immediately get the computed info.
+<Steps>
+<Step title="Search and Retrieve Product Information">
+You can search for product information, including many useful computed values.
+</Step>
+<Step title="Contribute Missing Information">
+Suppose we don't have the information you need on a specific product. In that case, you (or your users) can upload the product photos, and the backend (and our AI algorithms!) will process them, generating helpful info. The photos will also be available for the users of Open Food Facts and every other API user.
+</Step>
+<Step title="Immediate Computed Information">
+You could also ask your user to enter some of the information about the product (like name, category, and weight) so that they immediately get the computed info.
+</Step>
+</Steps>
 
-> Generally, the more information we have about a product, the more we can compute.
+<Callout type="tip">
+Generally, the more information we have about a product, the more we can compute.
+</Callout>
 
 ### Rate limits
 
@@ -61,15 +81,31 @@ If you need to fetch a significant fraction of the database, we recommend [downl
 
 ### If your users do not expect a result immediately (e.g., Inventory apps)
 
-- Submit photos (front packaging/nutrition values/ingredients): the most painless thing for your users.
-- The backend (Product Opener) and Open Food Facts AI (Robotoff) will generate some derived data from the photos.
-- Over time, other apps and the Open Food Facts community will fill the data gaps.
+<Steps>
+<Step title="Submit Photos">
+Submit photos (front packaging/nutrition values/ingredients): the most painless thing for your users.
+</Step>
+<Step title="Automated Data Generation">
+The backend (Product Opener) and Open Food Facts AI (Robotoff) will generate some derived data from the photos.
+</Step>
+<Step title="Community Data Filling">
+Over time, other apps and the Open Food Facts community will fill the data gaps.
+</Step>
+</Steps>
 
 ### If your users expect a result immediately (e.g., Nutrition apps)
 
-- If you submit the product's **nutritional values** and **category**, you'll get the **Nutri-Score**.
-- If you submit the product **ingredients**, you'll get the **NOVA group** (about food ultra-processing), **additives**, **allergens**, **normalized ingredients**, **vegan**, **vegetarian**…
-- If you submit the product's  **category** and **labels**, you'll get the **Eco-Score** (a rating of the product's environmental impact)
+<Steps>
+<Step title="Nutri-Score Calculation">
+If you submit the product's **nutritional values** and **category**, you'll get the **Nutri-Score**.
+</Step>
+<Step title="Ingredient Analysis">
+If you submit the product **ingredients**, you'll get the **NOVA group** (about food ultra-processing), **additives**, **allergens**, **normalized ingredients**, **vegan**, **vegetarian**…
+</Step>
+<Step title="Eco-Score Calculation">
+If you submit the product's  **category** and **labels**, you'll get the **Eco-Score** (a rating of the product's environmental impact)
+</Step>
+</Steps>
 
 ## API Deployments
 
@@ -83,7 +119,7 @@ Consider using the [staging environment](https://world.openfoodfacts.net) if you
 While testing your applications, **make all API requests to the staging environment**. This way, we can ensure the product database is safe.
 
 Staging require an http basic auth to avoid search engine indexing. The username is `off`, and the password `off`. Here is a small javascript code that you can test in your browser console:
-```js
+```javascript title="Example API Request with Basic Auth"
 fetch('https://world.openfoodfacts.net/api/v2/product/3274080005003.json', {
   method: 'GET',
   headers: { Authorization: 'Basic ' + btoa('off:off') },
