@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import ThemeAwareLogo from 'Components/ThemeAwareLogo';
+import ThemeAwareLogo from '@/components/ThemeAwareLogo';
 
 export default function HomePage() {
   return (
