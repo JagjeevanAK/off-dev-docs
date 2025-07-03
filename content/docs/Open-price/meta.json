@@ -2,5 +2,10 @@
   "title": "Open Prices",
   "description": "Price tracking and management",
   "icon": "DollarSign",
-  "root": true
+  "root": true,
+  "pages": [
+    "index",
+    "---Project Guide---",
+    "..."
+  ]
 }

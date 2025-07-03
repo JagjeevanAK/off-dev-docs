@@ -2,5 +2,10 @@
   "title": "Infrastructure",
   "description": "Server infrastructure and deployment guides",
   "icon": "Server",
-  "root": true
+  "root": true,
+  "pages":[
+    "...",
+    "---Reports---",
+    "...reports"
+  ]
 }
