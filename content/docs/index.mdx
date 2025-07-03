@@ -1,13 +1,42 @@
 ---
-title: Hello World
-description: Your first document
+title: "Getting Started"
+description: "Welcome to Open Food Facts Product Opener documentation. Find API guides for data usage and developer resources for contributors."
 ---
 
-Welcome to the docs! You can start writing documents in `/content/docs`.
+import { Cards, Card } from 'fumadocs-ui/components/card';
+import { Callout } from 'fumadocs-ui/components/callout';
 
-## What is Next?
+Welcome to the documentation of **Product Opener**, the web server at the heart of **[Open Food Facts](https://world.openfoodfacts.org/)** project. 
+
+It also powers the sibling **Open \[[Beauty](https://world.openbeautyfacts.org/)|[Pet Food](https://world.openpetfoodfacts.org/)|[Products](https://world.openproductsfacts.org/)\] Facts** projects
 
 <Cards>
-  <Card title="Learn more about Next.js" href="https://nextjs.org/docs" />
-  <Card title="Learn more about Fumadocs" href="https://fumadocs.vercel.app" />
+  <Card href="/docs/api" title="API Documentation">
+    Use the API or explore the data - guides for third-party developers and data users
+  </Card>
+  <Card href="/docs/dev" title="Developer Documentation">
+    Contribute to the project - resources for developers who want to contribute
+  </Card>
 </Cards>
+
+The repository for the project is at https://github.com/openfoodfacts/openfoodfacts-server/
+
+<Callout type="tip">
+Do not hesitate to contribute to this documentation, this is highly appreciated.
+</Callout>
+
+## Documentation organization
+
+The documentation is split between API documentation (for re-users, third party developers) and Developer documentation (for contributors).
+
+<Callout type="info">
+The documentation follows the [Diátaxis framework](https://diataxis.fr/).
+</Callout>
+
+<Callout type="info">
+Page titles should start with:
+* *tutorial on* - tutorials aimed at learning
+* *how to…* - how to guides to reach a specific goal
+* *explain…* - explanation to understand a topic
+* *reference…* - providing detailed information
+</Callout>
