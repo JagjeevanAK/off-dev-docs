@@ -24,7 +24,7 @@ export const baseOptions: BaseLayoutProps = {
     },
     {
       text: 'API',
-      url: 'https://off.apidocumentation.com/version-2/reference',
+      url: 'https://fuma-off.vercel.app/docs',
       external: true,
     },
     {
