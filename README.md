@@ -1,4 +1,4 @@
-Open Food Facts Documentation
+# Open Food Facts Documentation
 
 Run development server:
 
